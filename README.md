@@ -1,6 +1,6 @@
 # 📚 INF-310 | Estructuras de Datos II
 
-> **Prof. Juan Carlos Peña** · Universidad · 5to Semestre  
+> **Prof. Juan Carlos Peinado · Universidad · 5to Semestre  
 > Código en **Python** · Teoría + Ejercicios + Proyectos
 
 ---
@@ -89,7 +89,7 @@ python 01_nodo_arbol.py
 
 ## 👨‍🏫 Docente
 
-**Prof. Juan Carlos Peña**  
+**Prof. Juan Carlos Peinado  
 🔗 [github.com/profjcp](https://github.com/profjcp)
 
 ---
