@@ -112,17 +112,20 @@ class ArbolMVias:
     
     def _insertar_rec(self, nodo: NodoMVias, clave) -> None:
         """Auxiliar recursivo para insertar (sin split)."""
-        # Si es hoja, insertar aquí (si hay espacio)
-        if nodo.es_hoja():
-            if not nodo.esta_lleno():
-                self._insertar_ordenado(nodo.claves, clave)
-            # Si está lleno: en árbol-B haríamos split, aquí lo saltamos
+        # Si el nodo no está lleno, insertar aquí y terminar.
+        if not nodo.esta_lleno():
+            self._insertar_ordenado(nodo.claves, clave)
             return
         
-        # No es hoja: encontrar el hijo correcto
+        # Nodo lleno: bajar al hijo que corresponde según el rango de la clave.
+        # En M-vías sin balanceo, cuando un nodo está lleno se sigue descendiendo.
         i = 0
         while i < len(nodo.claves) and clave > nodo.claves[i]:
             i += 1
+
+        # Asegurar la estructura de hijos para poder descender.
+        while len(nodo.hijos) < len(nodo.claves) + 1:
+            nodo.hijos.append(None)
         
         if i < len(nodo.hijos) and nodo.hijos[i] is not None:
             self._insertar_rec(nodo.hijos[i], clave)

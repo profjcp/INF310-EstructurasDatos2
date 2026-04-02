@@ -80,75 +80,65 @@ class ArbolB:
         
         O(log n)
         """
-        raiz = self._raiz
-        
-        # Si la raíz está llena, hacer split ANTES de insertar
-        if len(raiz.claves) == self.orden - 1:
+        if self.buscar(clave):
+            return  # ignorar duplicados
+
+        promocion = self._insertar_rec(self._raiz, clave)
+
+        # Si la raíz se desbordó, crear nueva raíz y subir la clave media.
+        if promocion is not None:
+            clave_media, nuevo_derecho = promocion
             nueva_raiz = NodoB(es_hoja=False)
-            nueva_raiz.hijos.append(self._raiz)
-            self._split_hijo(nueva_raiz, 0)
+            nueva_raiz.claves = [clave_media]
+            nueva_raiz.hijos = [self._raiz, nuevo_derecho]
             self._raiz = nueva_raiz
-        
-        self._insertar_no_lleno(self._raiz, clave)
-    
-    def _insertar_no_lleno(self, nodo: NodoB, clave) -> None:
-        """Inserta en un nodo que garantizadamente NO está lleno."""
-        i = len(nodo.claves) - 1
-        
+
+    def _insertar_rec(self, nodo: NodoB, clave):
+        """
+        Inserta recursivamente y retorna una promoción opcional.
+
+        Retorna:
+            None, si no hubo desborde
+            (clave_media, nuevo_nodo_derecho), si hubo split del nodo actual
+        """
         if nodo.es_hoja:
-            # Insertar la clave en la posición correcta
-            nodo.claves.append(None)  # espacio temporal
-            while i >= 0 and clave < nodo.claves[i]:
-                nodo.claves[i + 1] = nodo.claves[i]
-                i -= 1
-            nodo.claves[i + 1] = clave
+            i = 0
+            while i < len(nodo.claves) and clave > nodo.claves[i]:
+                i += 1
+            nodo.claves.insert(i, clave)
         else:
-            # Encontrar el hijo correcto
-            while i >= 0 and clave < nodo.claves[i]:
-                i -= 1
-            i += 1
-            
-            # Si el hijo está lleno, hacer split primero
-            if len(nodo.hijos[i].claves) == self.orden - 1:
-                self._split_hijo(nodo, i)
-                # Después del split, decidir en cuál de los dos hijos insertar
-                if clave > nodo.claves[i]:
-                    i += 1
-            
-            self._insertar_no_lleno(nodo.hijos[i], clave)
-    
-    def _split_hijo(self, padre: NodoB, i: int) -> None:
+            i = 0
+            while i < len(nodo.claves) and clave > nodo.claves[i]:
+                i += 1
+
+            promocion_hijo = self._insertar_rec(nodo.hijos[i], clave)
+            if promocion_hijo is not None:
+                clave_media, nuevo_hijo_derecho = promocion_hijo
+                nodo.claves.insert(i, clave_media)
+                nodo.hijos.insert(i + 1, nuevo_hijo_derecho)
+
+        if len(nodo.claves) > self.orden - 1:
+            return self._dividir_nodo(nodo)
+
+        return None
+
+    def _dividir_nodo(self, nodo: NodoB):
         """
-        Divide el hijo i-ésimo del padre (que está lleno).
-        
-        Pasos:
-        1. Crear nuevo nodo con la mitad derecha de las claves.
-        2. Promover la clave del medio al padre.
-        3. El hijo original retiene la mitad izquierda.
+        Divide un nodo desbordado (len(claves) == orden) y retorna
+        la clave promovida junto al nuevo nodo derecho.
         """
-        t = self.t
-        hijo_lleno = padre.hijos[i]
-        nuevo_nodo = NodoB(es_hoja=hijo_lleno.es_hoja)
-        
-        # La clave del medio (índice t-1) sube al padre
-        clave_media = hijo_lleno.claves[t - 1]
-        
-        # El nuevo nodo recibe la mitad derecha de las claves
-        nuevo_nodo.claves = hijo_lleno.claves[t:]
-        
-        # Si no es hoja, también dividir los hijos
-        if not hijo_lleno.es_hoja:
-            nuevo_nodo.hijos = hijo_lleno.hijos[t:]
-            hijo_lleno.hijos = hijo_lleno.hijos[:t]
-        
-        # El hijo original retiene solo la mitad izquierda
-        hijo_lleno.claves = hijo_lleno.claves[:t - 1]
-        
-        # Insertar la clave media en el padre
-        padre.claves.insert(i, clave_media)
-        
-        # Insertar el nuevo nodo en los hijos del padre
-        padre.hijos.insert(i + 1, nuevo_nodo)
+        medio = len(nodo.claves) // 2
+        clave_media = nodo.claves[medio]
+
+        derecho = NodoB(es_hoja=nodo.es_hoja)
+        derecho.claves = nodo.claves[medio + 1:]
+        nodo.claves = nodo.claves[:medio]
+
+        if not nodo.es_hoja:
+            derecho.hijos = nodo.hijos[medio + 1:]
+            nodo.hijos = nodo.hijos[:medio + 1]
+
+        return clave_media, derecho
     
     # ------------------------------------------------------------------
     # Recorridos
