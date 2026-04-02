@@ -46,7 +46,7 @@ class GrafoPesado:
 # DIJKSTRA
 # ==============================================================
 
-def dijkstra(grafo: GrafoPesado, origen) -> tuple[dict, dict]:
+def dijkstra(grafo: GrafoPesado, origen, verbose: bool = False) -> tuple[dict, dict]:
     """
     Algoritmo de Dijkstra: camino más corto desde origen a todos los vértices.
     
@@ -55,6 +55,7 @@ def dijkstra(grafo: GrafoPesado, origen) -> tuple[dict, dict]:
     Args:
         grafo: Grafo pesado.
         origen: Vértice de partida.
+        verbose: Si True, imprime la tabla de distancias en cada paso.
     
     Returns:
         (distancias, predecesores)
@@ -71,6 +72,15 @@ def dijkstra(grafo: GrafoPesado, origen) -> tuple[dict, dict]:
     # Cola de prioridad: (distancia_actual, vertice)
     heap = [(0, origen)]
     visitados = set()
+
+    if verbose:
+        vertices_ord = sorted(grafo.vertices(), key=str)
+        ancho = max(len(str(v)) for v in vertices_ord) + 2
+        encabezado = f"{'Paso':>6}  {'Visitado':>{ancho}}" + "".join(
+            f"{str(v):>{ancho}}" for v in vertices_ord)
+        print(encabezado)
+        print("-" * len(encabezado))
+        paso = 0
     
     while heap:
         dist_actual, u = heapq.heappop(heap)
@@ -78,6 +88,15 @@ def dijkstra(grafo: GrafoPesado, origen) -> tuple[dict, dict]:
         if u in visitados:
             continue  # ya procesado (entrada obsoleta en el heap)
         visitados.add(u)
+
+        if verbose:
+            paso += 1
+            fila = f"{paso:>6}  {str(u):>{ancho}}"
+            for v in vertices_ord:
+                val = distancias[v]
+                celda = "∞" if val == INF else str(val)
+                fila += f"{celda:>{ancho}}"
+            print(fila)
         
         # Relajar aristas salientes de u
         for vecino, peso in grafo._adyacencia.get(u, []):
@@ -107,13 +126,14 @@ def reconstruir_camino(predecesores: dict, origen, destino) -> list:
 # FLOYD-WARSHALL
 # ==============================================================
 
-def floyd_warshall(vertices: list, aristas: list) -> tuple[dict, dict]:
+def floyd_warshall(vertices: list, aristas: list, verbose: bool = False) -> tuple[dict, dict]:
     """
     Algoritmo de Floyd-Warshall: camino más corto entre TODOS los pares.
     
     Args:
         vertices: Lista de vértices.
         aristas: Lista de tuplas (u, v, peso).
+        verbose: Si True, imprime la matriz D después de procesar cada vértice k.
     
     Returns:
         (dist, next_hop)
@@ -134,6 +154,22 @@ def floyd_warshall(vertices: list, aristas: list) -> tuple[dict, dict]:
     for u, v, w in aristas:
         dist[u][v] = w
         next_v[u][v] = v
+
+    def _imprimir_matriz(k_label):
+        verts = sorted(vertices, key=str)
+        ancho = max(len(str(v)) for v in verts) + 2
+        print(f"\nD después de procesar k={k_label}:")
+        print(" " * ancho + "".join(f"{str(v):>{ancho}}" for v in verts))
+        for i in verts:
+            fila = f"{str(i):>{ancho}}"
+            for j in verts:
+                val = dist[i][j]
+                celda = "∞" if val == INF else str(val)
+                fila += f"{celda:>{ancho}}"
+            print(fila)
+
+    if verbose:
+        _imprimir_matriz("(inicial)")
     
     # Programación dinámica: probar todos los vértices intermedios k
     for k in vertices:
@@ -142,6 +178,8 @@ def floyd_warshall(vertices: list, aristas: list) -> tuple[dict, dict]:
                 if dist[i][k] + dist[k][j] < dist[i][j]:
                     dist[i][j] = dist[i][k] + dist[k][j]
                     next_v[i][j] = next_v[i][k]
+        if verbose:
+            _imprimir_matriz(k)
     
     return dist, next_v
 

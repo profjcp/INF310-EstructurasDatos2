@@ -1,0 +1,21 @@
+isbn,titulo,autor,anio,genero,editorial,disponible
+978-0-13-468599-1,Clean Code,Robert C. Martin,2008,Programacion,Prentice Hall,true
+978-0-13-235088-4,The Pragmatic Programmer,David Thomas,1999,Programacion,Addison-Wesley,true
+978-0-13-110362-7,The C Programming Language,Brian Kernighan,1988,Programacion,Prentice Hall,false
+978-0-201-63361-0,Design Patterns,Erich Gamma,1994,Arquitectura,Addison-Wesley,true
+978-0-13-468432-1,Introduction to Algorithms,Thomas Cormen,2009,Algoritmos,MIT Press,true
+978-0-521-88068-8,The Art of Computer Programming,Donald Knuth,1968,Algoritmos,Addison-Wesley,false
+978-0-13-103805-5,Compilers: Principles Techniques,Alfred Aho,2006,Compiladores,Pearson,true
+978-0-13-228438-1,Operating System Concepts,Abraham Silberschatz,2018,Sistemas,Wiley,true
+978-0-470-10827-9,Database System Concepts,Abraham Silberschatz,2010,Bases de Datos,McGraw-Hill,false
+978-3-16-148410-0,Artificial Intelligence,Stuart Russell,2020,Inteligencia Artificial,Pearson,true
+978-0-13-291958-5,Estructura de Datos en C,Aaron Tenenbaum,1992,Estructuras de Datos,Prentice Hall,true
+978-84-7829-074-9,Estructuras de Datos,Luis Joyanes,2007,Estructuras de Datos,McGraw-Hill,true
+978-0-07-352332-2,Data Structures,Seymour Lipschutz,2014,Estructuras de Datos,McGraw-Hill,false
+978-0-13-110362-8,Algorithms in Java,Robert Sedgewick,2003,Algoritmos,Addison-Wesley,true
+978-0-262-03384-8,Introduction to Machine Learning,Ethem Alpaydin,2014,Machine Learning,MIT Press,true
+978-1-491-91205-8,Python for Data Analysis,Wes McKinney,2022,Datos,O'Reilly,true
+978-1-492-03264-9,Hands-On Machine Learning,Aurelien Geron,2019,Machine Learning,O'Reilly,false
+978-0-13-603517-5,Computer Networks,Andrew Tanenbaum,2010,Redes,Pearson,true
+978-0-07-338322-3,Digital Design,Morris Mano,2012,Electronica,McGraw-Hill,true
+978-0-13-234763-1,Software Engineering,Ian Sommerville,2015,Ingenieria de Software,Pearson,true

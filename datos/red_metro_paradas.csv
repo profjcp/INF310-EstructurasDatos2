@@ -1,0 +1,16 @@
+parada_id,nombre,linea,latitud,longitud
+1,Terminal Bimodal,L1,-17.7881,-63.1811
+2,Cristo Redentor,L1,-17.7820,-63.1750
+3,Equipetrol Norte,L1,-17.7745,-63.1682
+4,Las Americas,L1,-17.7670,-63.1610
+5,Plaza 24 de Septiembre,L1;L2,-17.7840,-63.1820
+6,Av. Canoto,L2,-17.7875,-63.1780
+7,Mercado Los Pozos,L2,-17.7910,-63.1840
+8,Urbari,L2,-17.7840,-63.1900
+9,Villa 1ro de Mayo,L2,-17.7780,-63.1960
+10,Plan 3000,L2,-17.7720,-63.2020
+11,Segundo Anillo Este,L3,-17.7840,-63.1700
+12,Tercer Anillo Norte,L3,-17.7760,-63.1640
+13,Cuarto Anillo,L3,-17.7690,-63.1580
+14,Av. Banzer km3,L3,-17.7620,-63.1520
+15,Zoologico,L4,-17.7970,-63.1770

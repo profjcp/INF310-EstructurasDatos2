@@ -15,13 +15,8 @@ Este repositorio es el material completo del curso **Estructuras de Datos II (IN
 
 ## 🧭 Índice General
 
-- [📂 Contenido del Repositorio](#-contenido-del-repositorio)
-- [🗂️ Estructura de cada Unidad](#️-estructura-de-cada-unidad)
-- [🚀 Proyectos Finales](#-proyectos-finales)
-- [⚙️ Cómo usar este repositorio](#️-cómo-usar-este-repositorio)
-- [📋 Sistema de Evaluación](#-sistema-de-evaluación)
-- [📚 Bibliografía](#-bibliografía)
-- [👨‍🏫 Docente](#-docente)
+- [🗺️ Mapa Conceptual del Curso](#️-mapa-conceptual-del-curso)
+- [🛠️ Recursos Transversales](#️-recursos-transversales)
 
 ---
 
@@ -39,6 +34,43 @@ Este repositorio es el material completo del curso **Estructuras de Datos II (IN
 
 ---
 
+## 🗺️ Mapa Conceptual del Curso
+
+Las unidades no son independientes: cada una construye sobre la anterior.
+Entender estas conexiones ayuda a estudiar con contexto.
+
+```
+Unidad 0 ── Buenas Prácticas (base para todo el código del curso)
+
+Unidad I  ── ABB (árbol binario con propiedad de ordenamiento)
+    │           ↳ Inserción O(h), Búsqueda O(h), pero h puede ser n en peor caso
+    │
+    ▼
+Unidad II ── Árbol M-Vías (generalización: cada nodo tiene hasta m hijos)
+    │           ↳ Reduce la altura: log_m(n) en vez de log_2(n)
+    │           ↳ Sin control de balanceo → puede degenerarse igual que ABB
+    │
+    ▼
+Unidad III ── Árbol-B (M-Vías + balanceo garantizado)
+                ↳ Todas las hojas al mismo nivel → h = O(log_m n) siempre
+                ↳ Usado en sistemas de archivos y bases de datos (acceso a disco)
+
+Unidad IV ── Grafos (estructura más general: nodos + aristas, sin jerarquía)
+    │           ↳ Los árboles son un caso especial de grafos (acíclicos y conexos)
+    │           ↳ BFS y DFS como recorridos base
+    │
+    ▼
+Unidad V  ── Grafos Pesados (aristas con costo/distancia/tiempo)
+                ↳ Dijkstra: camino mínimo desde un origen → O((V+E) log V)
+                ↳ Floyd-Warshall: camino mínimo entre todos los pares → O(V³)
+                ↳ Prim / Kruskal: árbol de expansión mínima → O(E log V)
+```
+
+> **Regla de oro:** si el problema involucra jerarquía y ordenamiento → árboles.
+> Si involucra relaciones entre pares de entidades → grafos.
+
+---
+
 ## 🗂️ Estructura de cada Unidad
 
 Cada carpeta de unidad contiene:
@@ -51,7 +83,54 @@ unidadX/
 │   └── 02_ejemplo.py
 └── ejercicios/      ← Problemas para practicar
     ├── enunciados.md
+    ├── plantilla_ejNN_nombre.py  ← Archivo de arranque con tests automáticos
     └── soluciones/
+```
+
+---
+
+## 🛠️ Recursos Transversales
+
+### `utils/visualizar.py`
+Funciones reutilizables para visualizar estructuras en consola. Disponibles en todas las unidades:
+
+```python
+import sys, os
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..'))
+from utils.visualizar import imprimir_arbol, imprimir_arbol_b, imprimir_grafo, imprimir_matriz
+
+# Árbol binario (Unidad I)
+imprimir_arbol(abb._raiz)
+
+# Árbol-B o M-Vías (Unidades II y III)
+imprimir_arbol_b(arbol_b._raiz)
+
+# Grafo (Unidades IV y V)
+imprimir_grafo(grafo._adyacencia, pesos=True)
+
+# Matriz de distancias Floyd-Warshall
+imprimir_matriz(dist, titulo="Distancias mínimas")
+```
+
+### `datos/` — Datasets reales para los proyectos
+
+| Archivo | Proyecto | Descripción |
+|---------|----------|-------------|
+| `datos/red_metro_paradas.csv` | Proyecto 1 | 15 paradas de transporte urbano con coordenadas |
+| `datos/red_metro_rutas.csv` | Proyecto 1 | Rutas entre paradas con distancia, tiempo y costo |
+| `datos/catalogo_libros.csv` | Proyecto 2 | 20 libros técnicos con ISBN, autor, año y disponibilidad |
+| `datos/malla_materias.csv` | Proyecto 3 | 15 materias con código, semestre y créditos |
+| `datos/malla_prerrequisitos.csv` | Proyecto 3 | Relaciones de prerrequisito entre materias |
+
+### Modo verbose en algoritmos (Unidad V)
+Dijkstra y Floyd-Warshall aceptan `verbose=True` para imprimir cada paso:
+
+```python
+# Ver la tabla de Dijkstra paso a paso
+distancias, pred = dijkstra(grafo, origen="A", verbose=True)
+
+# Ver la evolución de la matriz en Floyd-Warshall
+dist, next_hop = floyd_warshall(vertices, aristas, verbose=True)
 ```
 
 ---
@@ -64,16 +143,29 @@ Para el cierre de la materia, los estudiantes pueden desarrollar uno de los sigu
 - Modelar una red de paradas y rutas con pesos (distancia, tiempo o costo).
 - Implementar cálculo de rutas óptimas entre origen y destino.
 - Estructuras/algoritmos sugeridos: grafo con listas de adyacencia, Dijkstra, BFS/DFS.
+- **Dataset provisto:** `datos/red_metro_paradas.csv` y `datos/red_metro_rutas.csv`
 
 ### 2) Motor de búsqueda de registros (ABB + Árboles M-Vías/B)
 - Gestionar un conjunto grande de registros (contactos, libros, productos, etc.).
 - Permitir inserción, eliminación, búsqueda por clave y recorridos ordenados.
 - Comparar desempeño entre ABB y una alternativa M-vías o Árbol-B en distintos tamaños de datos.
+- **Dataset provisto:** `datos/catalogo_libros.csv` (20 libros técnicos)
 
 ### 3) Planificador académico con prerrequisitos (Grafo dirigido)
 - Representar materias y dependencias de prerrequisitos como un grafo dirigido.
 - Validar si existen ciclos y proponer un orden de cursado por semestres.
 - Estructuras/algoritmos sugeridos: detección de ciclos, orden topológico, BFS/DFS.
+- **Dataset provisto:** `datos/malla_materias.csv` y `datos/malla_prerrequisitos.csv`
+
+### 📋 Rúbrica de evaluación de proyectos
+
+| Criterio | Insuficiente (0–49%) | Suficiente (50–74%) | Sobresaliente (75–100%) |
+|----------|----------------------|---------------------|--------------------------|
+| **Correctitud del algoritmo** | No implementado o falla en casos básicos | Funciona en el caso feliz; falla en casos borde | Maneja todos los casos, incluyendo grafos vacíos y datos inválidos |
+| **Uso correcto de la estructura** | Usa listas/diccionarios sin ABB/grafo | Usa la estructura pero sin aprovechar sus propiedades | Justifica por qué eligió esa estructura sobre otras alternativas |
+| **Análisis de complejidad** | Ausente | Menciona la notación O() de las operaciones principales | Justifica con medición empírica (tiempo de ejecución vs. n) |
+| **Lectura del dataset real** | No usa el CSV provisto | Lee el CSV pero con código frágil | Lee, valida y documenta el formato esperado |
+| **Documentación** | Sin comentarios ni docstrings | Docstrings en las funciones principales | Docstrings completos + ejemplo de uso en `if __name__ == "__main__"` |
 
 ---
 

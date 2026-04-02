@@ -1,0 +1,16 @@
+codigo,nombre,semestre,creditos
+MAT110,Matematica I,1,5
+INF110,Introduccion a la Programacion,1,4
+MAT210,Matematica II,2,5
+INF210,Programacion Orientada a Objetos,2,4
+INF220,Estructuras de Datos I,2,4
+MAT310,Matematica Discreta,3,4
+INF310,Estructuras de Datos II,3,4
+INF320,Algoritmos y Complejidad,3,4
+INF330,Bases de Datos I,3,4
+INF410,Sistemas Operativos,4,4
+INF420,Bases de Datos II,4,4
+INF430,Redes de Computadoras,4,4
+INF510,Compiladores,5,4
+INF520,Inteligencia Artificial,5,4
+INF530,Ingenieria de Software,5,4
