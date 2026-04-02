@@ -182,7 +182,7 @@ Ordena todas las aristas por peso y las agrega al MST si no forman ciclo.
 
 | Archivo | Descripción |
 |---------|-------------|
-| [`ejemplos/01_dijkstra.py`](./ejemplos/01_dijkstra.py) | Algoritmo de Dijkstra |
-| [`ejemplos/02_floyd_warshall.py`](./ejemplos/02_floyd_warshall.py) | Floyd-Warshall y Warshall |
-| [`ejemplos/03_prim_kruskal.py`](./ejemplos/03_prim_kruskal.py) | Prim y Kruskal (MST) |
+| [`ejemplos/01_algoritmos_grafos_pesados.py`](./ejemplos/01_algoritmos_grafos_pesados.py) | Implementación completa: Dijkstra, Floyd-Warshall, Warshall, Prim y Kruskal |
 | [`ejercicios/enunciados.md`](./ejercicios/enunciados.md) | Ejercicios propuestos |
+| [`ejercicios/plantilla_ej04_transporte.py`](./ejercicios/plantilla_ej04_transporte.py) | Plantilla guiada del problema de transporte con tests base |
+| [`ejercicios/plantilla_ej06_warshall.py`](./ejercicios/plantilla_ej06_warshall.py) | Plantilla guiada para implementar Warshall |
